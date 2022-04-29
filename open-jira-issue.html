@@ -7,12 +7,15 @@
 <script type="text/javascript">
     function createBookmark(input) {
       var baseurl = input.value;
+      if(!baseurl.match(/^https?:\/\//)){
+        baseurl = "https://" + baseurl;
+      }
       var linkelement = document.getElementById('bookmark');
       linkelement.setAttribute("href", "javascript: (() => { var baseurl='" + baseurl + "'; var selectedText = ''; if (window.getSelection) { selectedText = window.getSelection(); } else if (document.getSelection) { selectedText = document.getSelection(); } else if (document.selection) { selectedText = document.selection.createRange().text; } if(selectedText=='') { alert('No Issue ID selected'); } else { var text = selectedText.toString();  var id = text.match('[A-Z]+-[0-9]+'); if (id==null) {alert('No Jira ID found in selection');} else {window.open(baseurl+'/browse/'+id, '_blank'); }} })(); ");
     }
 </script>
 <ol>
-<li>Enter the base URL of your Jira Instance: <input type="text" id="myInput1" onchange="createBookmark(this)" placeholder="https://jira.example.com" /></li>    
+<li>Enter the base URL of your Jira Instance (including "https://"): <input type="text" id="baseurl" oninput="createBookmark(this)" placeholder="https://jira.example.com" /></li>    
 <li>Bookmark the following link, so that it appears in your bookmarks bar: 
 <a id="bookmark" href="">Open Jira Issue</a></li>
 </ol>
