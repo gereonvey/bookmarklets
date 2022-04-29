@@ -1,0 +1,26 @@
+<html><head>
+<title>Jira Issue Bookmarklet</title>
+</head><body>
+<h1>Jira Issue Bookmarklet</h1>
+<p>Here is how you open a Jira issue easily</p>
+<p>Create the bookmarklet in your browser</p>
+<script type="text/javascript">
+    function createBookmark(input) {
+      var baseurl = input.value;
+      var linkelement = document.getElementById('bookmark');
+      linkelement.setAttribute("href", "javascript: (() => { var baseurl='" + baseurl + "'; var selectedText = ''; if (window.getSelection) { selectedText = window.getSelection(); } else if (document.getSelection) { selectedText = document.getSelection(); } else if (document.selection) { selectedText = document.selection.createRange().text; } if(selectedText=='') { alert('No Issue ID selected'); } else { var text = selectedText.toString();  var id = text.match('[A-Z]+-[0-9]+'); if (id==null) {alert('No Jira ID found in selection');} else {window.open(baseurl+'/browse/'+id, '_blank'); }} })(); ");
+    }
+</script>
+<ol>
+<li>Enter the base URL of your Jira Instance: <input type="text" id="myInput1" onchange="createBookmark(this)" placeholder="https://jira.example.com" /></li>    
+<li>Bookmark the following link, so that it appears in your bookmarks bar: 
+<a id="bookmark" href="">Open Jira Issue</a></li>
+</ol>
+Now, each time you encounter a Jira issue which is not linked, you can still easily get to it:
+<ol>
+<li>Mark the issue ID on a webpage</li>
+<li>Click on the bookmarklet and it will take you to the Jira issue</li>
+</ol>
+<p>As an example, you could mark the issue TEAM-1000 in this text to go to the Jira page of the issue.</p>
+</body>
+</html>
